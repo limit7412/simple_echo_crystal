@@ -1,6 +1,15 @@
 require "./echo/*"
+require "socket"
 
-# TODO: Write documentation for `Echo`
 module Echo
-  # TODO: Put your code here
+  server = TCPServer.new(2000)
+  counter : Int64 = 0
+  loop do
+    server.accept do |socket|
+      p socket
+      socket.puts "Hello #{Time.now} counter:#{counter}"
+      socket.close
+      counter += 1
+    end
+  end
 end
